@@ -14,5 +14,10 @@ export default function Home() {
   const { data } = useSession();
   console.log("🚀 ~ data:", data);
 
-  return <button onClick={handleSign}>Login</button>;
+  return (
+    <div>
+      <button onClick={handleSign}>Login</button>
+      <button onClick={handleSignOut}>Logout</button>
+    </div>
+  );
 }
