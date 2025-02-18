@@ -1,6 +1,5 @@
 "use client";
 
-import LogoIMG from "@/assets/logo.png";
 import {
   Sidebar,
   SidebarContent,
@@ -13,7 +12,8 @@ import {
   SidebarMenuItem,
   SidebarTrigger,
   useSidebar,
-} from "@/components/ui/sidebar";
+} from "@/_components/ui/sidebar";
+import LogoIMG from "@/assets/logo.png";
 import { Plus, User, UsersRound } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";

@@ -1,6 +1,6 @@
 "use client";
 
-import { useSidebar } from "@/components/ui/sidebar";
+import { useSidebar } from "@/_components/ui/sidebar";
 
 export default function Home() {
   const { toggleSidebar } = useSidebar();
