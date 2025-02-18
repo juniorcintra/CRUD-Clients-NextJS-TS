@@ -14,11 +14,20 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Plus, User, UsersRound } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Avatar, AvatarImage } from "./ui/avatar";
+import { Button } from "./ui/button";
 
 export function AppSidebar() {
+  const handleSign = async () => {
+    await signIn("google");
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
+
   const { data } = useSession();
 
   const items = [
@@ -65,15 +74,24 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="pb-8">
-        <Avatar className="flex w-full flex-1 items-center">
-          <AvatarImage
-            src={data?.user?.image ?? ""}
-            className="m-auto h-10 w-10 rounded-full"
-          />
-          <AvatarFallback>
-            <User />
-          </AvatarFallback>
-        </Avatar>
+        <Button
+          onClick={data ? handleSignOut : handleSign}
+          className="flex items-center justify-center rounded-md bg-transparent text-black hover:bg-slate-400/15"
+        >
+          {data?.user ? (
+            <div className="flex items-center justify-between gap-2">
+              <Avatar className="h-6 w-6">
+                <AvatarImage src={data?.user?.image ?? ""} />
+              </Avatar>
+              <span>{data?.user?.name}</span>
+            </div>
+          ) : (
+            <div className="flex items-center justify-between gap-2">
+              <User size={40} />
+              <span>Logar</span>
+            </div>
+          )}
+        </Button>
       </SidebarFooter>
     </Sidebar>
   );

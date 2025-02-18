@@ -35,7 +35,7 @@ export default function RootLayout({
             <AppSidebar />
             <main
               className={
-                "bottom-0 right-0 flex h-full w-full flex-1 flex-col bg-[#F0F0F0] sm:h-screen"
+                "bottom-0 right-0 flex h-screen w-full flex-1 flex-col items-center justify-center bg-[#F0F0F0] sm:h-screen"
               }
             >
               {children}
