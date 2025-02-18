@@ -15,12 +15,3 @@ services:
       POSTGRES_DB: clients
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
-  frontend_clients:
-    container_name: frontend_clients
-    build: .
-    restart: unless-stopped
-    ports:
-      - 5032:3000
-    depends_on:
-      - postgres
