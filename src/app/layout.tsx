@@ -4,6 +4,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/Header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,10 +36,13 @@ export default function RootLayout({
             <AppSidebar />
             <main
               className={
-                "bottom-0 right-0 flex h-screen w-full flex-1 flex-col items-center justify-center bg-[#F0F0F0] sm:h-screen"
+                "flex h-screen w-full flex-1 flex-col items-center justify-between bg-[#F0F0F0] sm:h-screen"
               }
             >
-              {children}
+              <Header />
+              <div className="flex h-screen w-full flex-1 items-center justify-center">
+                {children}
+              </div>
             </main>
           </SidebarProvider>
         </AuthProvider>

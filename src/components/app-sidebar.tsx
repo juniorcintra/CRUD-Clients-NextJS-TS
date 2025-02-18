@@ -12,14 +12,21 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarTrigger,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { Plus, User, UsersRound } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
-import { Avatar, AvatarImage } from "./ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 export function AppSidebar() {
+  const { data } = useSession();
+  const { state: stateSidebar } = useSidebar();
+  const path = usePathname();
+
   const handleSign = async () => {
     await signIn("google");
   };
@@ -28,12 +35,10 @@ export function AppSidebar() {
     await signOut();
   };
 
-  const { data } = useSession();
-
   const items = [
     {
       title: "Clientes",
-      url: "/clients",
+      url: "/",
       icon: UsersRound,
     },
     {
@@ -45,15 +50,17 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader className="relativ pt-8">
-        <SidebarTrigger className="border-width-2 absolute -right-4 top-2 rounded-full bg-white" />
-        <Image
-          src={LogoIMG}
-          alt="Logo"
-          width={50}
-          height={50}
-          className="m-auto"
-        />
+      <SidebarHeader className="relative pt-8">
+        <SidebarTrigger className="border-width-2 absolute -right-3 top-2 rounded-full bg-white" />
+        <Link href="/">
+          <Image
+            src={LogoIMG}
+            alt="Logo"
+            width={stateSidebar === "collapsed" ? 25 : 50}
+            height={stateSidebar === "collapsed" ? 25 : 50}
+            className="m-auto"
+          />
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
@@ -62,7 +69,14 @@ export function AppSidebar() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <a
+                      href={item.url}
+                      className={
+                        item.url === path
+                          ? "bg-[#0a6d01]/15 hover:bg-[#0a6d01]/15"
+                          : ""
+                      }
+                    >
                       <item.icon />
                       <span>{item.title}</span>
                     </a>
@@ -73,7 +87,7 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className="pb-8">
+      <SidebarFooter className="pb-4">
         <Button
           onClick={data ? handleSignOut : handleSign}
           className="flex items-center justify-center rounded-md bg-transparent text-black hover:bg-slate-400/15"
@@ -82,13 +96,16 @@ export function AppSidebar() {
             <div className="flex items-center justify-between gap-2">
               <Avatar className="h-6 w-6">
                 <AvatarImage src={data?.user?.image ?? ""} />
+                <AvatarFallback>
+                  {data?.user?.name?.charAt(0).toUpperCase()}
+                </AvatarFallback>
               </Avatar>
-              <span>{data?.user?.name}</span>
+              {stateSidebar !== "collapsed" && <span>{data?.user?.name}</span>}
             </div>
           ) : (
             <div className="flex items-center justify-between gap-2">
               <User size={40} />
-              <span>Logar</span>
+              {stateSidebar !== "collapsed" && <span>Logar</span>}
             </div>
           )}
         </Button>
