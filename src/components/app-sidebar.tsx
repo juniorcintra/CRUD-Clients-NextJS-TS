@@ -17,10 +17,10 @@ import {
 import { Plus, User, UsersRound } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
 
 export function AppSidebar() {
   const { data } = useSession();
