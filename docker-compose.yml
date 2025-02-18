@@ -1,12 +1,26 @@
 version: "3.8"
 
+volumes:
+  postgres_data:
+
 services:
   postgres:
     container_name: clients_postgres
-    image: postgres
+    image: postgres:latest
     ports:
       - 5432:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: clients
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  frontend_clients:
+    container_name: frontend_clients
+    build: .
+    restart: unless-stopped
+    ports:
+      - 5032:3000
+    depends_on:
+      - postgres
