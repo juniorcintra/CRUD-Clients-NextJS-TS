@@ -51,7 +51,7 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader className="relative pt-8">
-        <SidebarTrigger className="border-width-2 absolute -right-3 top-2 rounded-full bg-white" />
+        <SidebarTrigger className="border-width-2 absolute -right-3 top-2 rounded-full bg-white text-black" />
         <Link href="/">
           <Image
             src={LogoIMG}

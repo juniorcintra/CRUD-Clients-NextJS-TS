@@ -115,7 +115,7 @@ export default function Home() {
   return (
     <div className="flex h-full w-full flex-col items-start gap-8">
       <h1 className="text-[32px] font-bold text-black">Clientes</h1>
-      <DataTable columns={columns} data={data} />;
+      <DataTable columns={columns} data={data} />
     </div>
   );
 }
