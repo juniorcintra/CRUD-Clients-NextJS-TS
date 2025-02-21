@@ -1,10 +1,10 @@
-import { AppSidebar } from "@/_components/AppSidebar";
-import Header from "@/_components/Header";
-import { SidebarProvider } from "@/_components/ui/sidebar";
-import AuthProvider from "@/_providers/auth";
+import { AppSidebar } from "@/components/AppSidebar";
+import Header from "@/components/Header";
+import AuthProvider from "@/providers/auth";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,7 +40,7 @@ export default function RootLayout({
               }
             >
               <Header />
-              <div className="flex h-screen w-full flex-1 items-center justify-center">
+              <div className="flex h-screen w-full flex-1 justify-center p-8">
                 {children}
               </div>
             </main>
