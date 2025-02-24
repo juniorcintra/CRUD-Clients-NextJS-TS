@@ -1,5 +1,6 @@
 "use client";
 
+import { deleteClients } from "@/actions/deleteClients";
 import { getClients } from "@/actions/getClients";
 import { DataTable } from "@/components/DataClients";
 import { Button } from "@/components/ui/button";
@@ -16,7 +17,7 @@ import { Client } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function Home() {
   const [clients, setClients] = useState<Client[]>([]);
@@ -24,13 +25,19 @@ export default function Home() {
   const { formatPhone } = useFormatPhone();
   const { push } = useRouter();
 
+  const fetch = useCallback(async () => {
+    const clientsFound = await getClients({ search });
+    setClients(clientsFound);
+  }, [search, setClients]);
+
   useEffect(() => {
-    const fetch = async () => {
-      const clientsFound = await getClients({ search });
-      setClients(clientsFound);
-    };
     fetch();
-  }, [search]);
+  }, [fetch]);
+
+  const handleDelete = async (clientIds: string[]) => {
+    await deleteClients(clientIds);
+    fetch();
+  };
 
   const columns: ColumnDef<Client>[] = [
     {
@@ -120,6 +127,7 @@ export default function Home() {
         data={clients}
         setSearch={setSearch}
         search={search}
+        handleDelete={handleDelete}
       />
     </div>
   );

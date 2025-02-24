@@ -18,14 +18,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Search, Trash } from "lucide-react";
+import { Client } from "@/types";
+import { Search, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import ButtonComponent from "./CustomButton";
+import {
+  default as ButtonComponent,
+  default as CustomButton,
+} from "./CustomButton";
 import { InputField, InputIcon, InputRoot } from "./Input";
 import { Button } from "./ui/button";
-import { deleteClients } from "@/actions/deleteClients";
-import { Client } from "@/types";
-import { useRouter } from "next/navigation";
 import {
   Dialog,
   DialogClose,
@@ -35,13 +36,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
-import CustomButton from "./CustomButton";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   setSearch: (value: string) => void;
   search: string;
+  handleDelete: (clientIds: string[]) => Promise<void>;
 }
 
 export function DataTable<TData, TValue>({
@@ -49,11 +50,12 @@ export function DataTable<TData, TValue>({
   data,
   setSearch,
   search,
+  handleDelete,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [clientsToDelete, setClientsToDelete] = useState<string[]>([]);
   const [rowSelection, setRowSelection] = useState({});
-  const { refresh } = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
 
   const table = useReactTable({
     data,
@@ -69,13 +71,13 @@ export function DataTable<TData, TValue>({
     },
   });
 
-  const handleDelete = async () => {
+  const prepareDelete = async () => {
     const clientIds = table
       .getFilteredSelectedRowModel()
       .rows.map((row) => (row.original as Client).id);
 
-    await deleteClients(clientIds);
-    refresh();
+    handleDelete(clientIds);
+    setIsOpen(false);
   };
 
   useEffect(() => {
@@ -88,7 +90,7 @@ export function DataTable<TData, TValue>({
   }, [table, table.getFilteredSelectedRowModel().rows]);
 
   return (
-    <Dialog>
+    <Dialog open={isOpen}>
       <div className="h-fit w-full space-y-4 rounded-md bg-[#18181B] p-6">
         <div className="flex w-full items-center justify-between">
           <InputRoot>
@@ -105,12 +107,16 @@ export function DataTable<TData, TValue>({
           {table.getFilteredSelectedRowModel().rows.length > 0 && (
             <div className="h-9 max-w-[220px]">
               <DialogTrigger asChild>
-                <ButtonComponent type="button" variant="red">
+                <ButtonComponent
+                  type="button"
+                  variant="red"
+                  onClick={() => setIsOpen(true)}
+                >
                   Excluir Selecionado
                   {table.getFilteredSelectedRowModel().rows.length > 1
                     ? "s"
                     : ""}
-                  <Trash />
+                  <Trash2 className="size-5" />
                 </ButtonComponent>
               </DialogTrigger>
             </div>
@@ -216,8 +222,8 @@ export function DataTable<TData, TValue>({
                   Cancelar
                 </CustomButton>
               </DialogClose>
-              <CustomButton variant="red" type="button" onClick={handleDelete}>
-                <Trash />
+              <CustomButton variant="red" type="button" onClick={prepareDelete}>
+                <Trash2 className="size-5" />
                 Deletar
               </CustomButton>
             </div>
