@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/table";
 import { Search, Trash } from "lucide-react";
 import { useState } from "react";
-import ButtonComponent from "./ButtonComponent";
+import ButtonComponent from "./CustomButton";
 import { InputField, InputIcon, InputRoot } from "./Input";
 import { Button } from "./ui/button";
 
@@ -68,7 +68,7 @@ export function DataTable<TData, TValue>({
         </InputRoot>
         {table.getFilteredSelectedRowModel().rows.length > 0 && (
           <div className="h-9 max-w-[220px]">
-            <ButtonComponent type="button">
+            <ButtonComponent type="button" variant="red">
               Excluir Selecionado
               {table.getFilteredSelectedRowModel().rows.length > 1 ? "s" : ""}
               <Trash />
