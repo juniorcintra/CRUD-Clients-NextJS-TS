@@ -21,6 +21,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  clients       Client[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -71,9 +72,11 @@ model Client {
   email     String
   phone     String
   birthDate String
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?  @unique
   Address   Address?
 
-   @@map("client")
+  @@map("client")
 }
 
 model Address {
