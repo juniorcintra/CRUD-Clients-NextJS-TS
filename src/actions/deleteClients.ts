@@ -8,4 +8,10 @@ export const deleteClients = async (clientIds: string[]) => {
       id: { in: clientIds },
     },
   });
+
+  await db.address.deleteMany({
+    where: {
+      clientId: { in: clientIds },
+    },
+  });
 };
