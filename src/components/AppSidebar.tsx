@@ -41,7 +41,7 @@ export function AppSidebar() {
       url: "/",
       icon: UsersRound,
     },
-    {
+    data && {
       title: "Cadastrar Cliente",
       url: "/clients/new",
       icon: Plus,
@@ -67,18 +67,18 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem key={item?.title}>
                   <SidebarMenuButton asChild>
                     <a
-                      href={item.url}
+                      href={item?.url}
                       className={
-                        item.url === path
+                        item?.url === path
                           ? "bg-[#0a6d01]/15 hover:bg-[#0a6d01]/15"
                           : ""
                       }
                     >
-                      <item.icon />
-                      <span>{item.title}</span>
+                      {item?.icon && <item.icon />}
+                      <span>{item?.title}</span>
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
