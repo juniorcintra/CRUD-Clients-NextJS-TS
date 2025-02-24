@@ -2,7 +2,7 @@
 
 import { db } from "@/lib/prisma";
 
-interface CreateClientParams {
+interface UpdateClientParams {
   id: string;
   name: string;
   email: string;
@@ -13,14 +13,14 @@ interface CreateClientParams {
     zipCode: string;
     number: string;
     street: string;
-    complement: string;
+    complement?: string | undefined;
     neighborhood: string;
     city: string;
     state: string;
   };
 }
 
-export const updateClient = async (params: CreateClientParams) => {
+export const updateClient = async (params: UpdateClientParams) => {
   await db.client.update({
     where: { id: params.id },
     data: {

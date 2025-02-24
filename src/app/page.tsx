@@ -2,16 +2,27 @@
 
 import { getClients } from "@/actions/getClients";
 import { DataTable } from "@/components/DataClients";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import useFormatPhone from "@/hooks/use-format-phone";
 import { Client } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
+import { MoreHorizontal } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const [clients, setClients] = useState<Client[]>([]);
   const [search, setSearch] = useState("");
   const { formatPhone } = useFormatPhone();
+  const { push } = useRouter();
 
   useEffect(() => {
     const fetch = async () => {
@@ -70,6 +81,32 @@ export default function Home() {
             {props.row.original?.address?.street},{" "}
             {props.row.original?.address?.number}
           </span>
+        );
+      },
+    },
+    {
+      id: "actions",
+      cell: ({ row }) => {
+        const clientId = row.original.id;
+
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Ações</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Ações</DropdownMenuLabel>
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onClick={() => push(`/clients/${clientId}`)}
+              >
+                Editar cliente
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         );
       },
     },

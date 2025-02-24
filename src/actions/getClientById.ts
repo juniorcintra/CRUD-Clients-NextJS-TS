@@ -6,10 +6,11 @@ interface GetClientByIdProps {
   clientId: string;
 }
 
-export const getClientById = ({ clientId }: GetClientByIdProps) => {
-  return db.client.findMany({
+export const getClientById = async ({ clientId }: GetClientByIdProps) => {
+  return await db.client.findUnique({
     where: {
       id: clientId,
     },
+    include: { address: true },
   });
 };

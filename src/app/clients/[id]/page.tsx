@@ -1,8 +1,14 @@
 import BackButtonComponent from "@/components/BackButton";
 import { ChevronLeft } from "lucide-react";
-import CreateClientForm from "./components/create-client-form";
+import UpdateClientForm from "./components/update-client-form";
 
-export default async function NewClient() {
+interface EditClientProps {
+  params: Promise<{ id: string }>;
+}
+
+export default async function EditClient(props: EditClientProps) {
+  const { id } = await props.params;
+
   return (
     <div className="flex h-full w-full flex-col items-start gap-8">
       <div className="flex items-center gap-4">
@@ -10,9 +16,9 @@ export default async function NewClient() {
           <ChevronLeft />
         </BackButtonComponent>
 
-        <h1 className="text-[32px] font-bold text-black">Cadastrar Cliente </h1>
+        <h1 className="text-[32px] font-bold text-black">Editar Cliente </h1>
       </div>
-      <CreateClientForm />
+      <UpdateClientForm id={id} />
     </div>
   );
 }
