@@ -13,14 +13,14 @@ interface CreateClientParams {
     zipCode: string;
     number: string;
     street: string;
-    complement: string;
+    complement?: string | undefined;
     neighborhood: string;
     city: string;
     state: string;
   };
 }
 
-export const createClients = async (params: CreateClientParams) => {
+export const createClient = async (params: CreateClientParams) => {
   const clientCreated = await db.client.create({
     data: params,
   });
