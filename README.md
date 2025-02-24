@@ -9,7 +9,7 @@ npm install
 
 docker compose up -d
 
-nps prisma generate
+npx prisma generate
 
 npx prisma migrate deploy
 

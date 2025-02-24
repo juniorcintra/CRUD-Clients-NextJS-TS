@@ -66,10 +66,6 @@ export default function CreateClientForm() {
     resolver: zodResolver(createClientSchema),
   });
 
-  useEffect(() => {
-    console.log("Form errors:", errors);
-  }, [errors]);
-
   async function onSubcribe(data: CreateClientSchema) {
     await createClient({ ...data, userId });
     push(`/`);

@@ -67,11 +67,7 @@ export default function UpdateClientForm({ id }: { id: string }) {
   } = useForm<UpdateClientSchema>({
     resolver: zodResolver(updateClientSchema),
   });
-
-  useEffect(() => {
-    console.log("Form errors:", errors);
-  }, [errors]);
-
+  
   async function onSubcribe(data: UpdateClientSchema) {
     await updateClient({ ...data, userId, id });
     push(`/`);
