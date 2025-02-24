@@ -73,8 +73,8 @@ model Client {
   phone     String
   birthDate String
   user      User?    @relation(fields: [userId], references: [id])
-  userId    String?  @unique
-  Address   Address?
+  userId    String? 
+  address   Address?
 
   @@map("client")
 }
