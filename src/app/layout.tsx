@@ -36,7 +36,7 @@ export default function RootLayout({
             <AppSidebar />
             <main
               className={
-                "flex h-screen w-full flex-1 flex-col items-center justify-between bg-[#F0F0F0] sm:h-screen"
+                "flex h-screen w-full flex-1 flex-col items-center justify-between bg-[#F8F8F8] sm:h-screen"
               }
             >
               <Header />

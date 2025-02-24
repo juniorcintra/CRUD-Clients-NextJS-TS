@@ -51,25 +51,21 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="h-fit w-full rounded-md bg-[#18181B] p-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center py-4">
-          <InputRoot>
-            <InputField
-              type="text"
-              placeholder="Pesquise por nome ou email"
-              value={
-                (table.getColumn("email")?.getFilterValue() as string) ?? ""
-              }
-              onChange={(event) =>
-                table.getColumn("email")?.setFilterValue(event.target.value)
-              }
-            />
-            <InputIcon>
-              <Search />
-            </InputIcon>
-          </InputRoot>
-        </div>
+    <div className="h-fit w-full space-y-4 rounded-md bg-[#18181B] p-6">
+      <div className="flex w-full items-center justify-between">
+        <InputRoot>
+          <InputField
+            type="text"
+            placeholder="Pesquise por nome ou email"
+            value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("email")?.setFilterValue(event.target.value)
+            }
+          />
+          <InputIcon>
+            <Search />
+          </InputIcon>
+        </InputRoot>
         {table.getFilteredSelectedRowModel().rows.length > 0 && (
           <div className="h-9 max-w-[220px]">
             <ButtonComponent type="button">
@@ -121,7 +117,7 @@ export function DataTable<TData, TValue>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className="h-24 text-center text-white"
                 >
                   Nenhum cliente cadastrado.
                 </TableCell>
