@@ -67,7 +67,7 @@ export default function UpdateClientForm({ id }: { id: string }) {
   } = useForm<UpdateClientSchema>({
     resolver: zodResolver(updateClientSchema),
   });
-  
+
   async function onSubcribe(data: UpdateClientSchema) {
     await updateClient({ ...data, userId, id });
     push(`/`);
@@ -130,13 +130,14 @@ export default function UpdateClientForm({ id }: { id: string }) {
   useEffect(() => {
     handleGetClientById();
   }, [handleGetClientById]);
+
   return (
     <form
       method=""
       onSubmit={handleSubmit(onSubcribe)}
       className="w-full space-y-6 rounded-2xl border border-gray-600 bg-[#27272A] p-8"
     >
-      <div className="flex w-full space-x-3">
+      <div className="flex w-full flex-wrap gap-6">
         <div className="flex-1 space-y-2">
           <InputRoot variant="full">
             <InputField
@@ -173,7 +174,7 @@ export default function UpdateClientForm({ id }: { id: string }) {
           )}
         </div>
       </div>
-      <div className="flex w-full space-x-3">
+      <div className="flex w-full flex-wrap gap-6">
         <div className="flex-1 space-y-2">
           <InputRoot variant="full">
             <InputField
@@ -209,7 +210,7 @@ export default function UpdateClientForm({ id }: { id: string }) {
           )}
         </div>
       </div>
-      <div className="flex w-full space-x-3">
+      <div className="flex w-full flex-wrap gap-6">
         <div className="flex-1 space-y-2">
           <InputRoot variant="full">
             <InputField
@@ -246,7 +247,7 @@ export default function UpdateClientForm({ id }: { id: string }) {
           )}
         </div>
       </div>
-      <div className="flex w-full space-x-3">
+      <div className="flex w-full">
         <div className="flex-1 space-y-2">
           <InputRoot variant="full">
             <InputField
@@ -265,7 +266,7 @@ export default function UpdateClientForm({ id }: { id: string }) {
           )}
         </div>
       </div>
-      <div className="flex w-full space-x-3">
+      <div className="flex w-full">
         <div className="flex-1 space-y-2">
           <InputRoot variant="full">
             <InputField
