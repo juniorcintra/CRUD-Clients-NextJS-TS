@@ -27,11 +27,15 @@ import { Button } from "./ui/button";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  setSearch: (value: string) => void;
+  search: string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  setSearch,
+  search,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = useState({});
@@ -57,10 +61,8 @@ export function DataTable<TData, TValue>({
           <InputField
             type="text"
             placeholder="Pesquise por nome ou email"
-            value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn("email")?.setFilterValue(event.target.value)
-            }
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
           />
           <InputIcon>
             <Search />
