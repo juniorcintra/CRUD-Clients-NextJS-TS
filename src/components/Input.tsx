@@ -1,6 +1,22 @@
 import type { ComponentProps } from "react";
+import { tv, VariantProps } from "tailwind-variants";
 
-interface InputRootProps extends ComponentProps<"div"> {
+const inputVariants = tv({
+  base: "data-[error=true]:border-danger group flex h-12 flex-1 items-center gap-2 rounded-xl border border-[#27272A] bg-[#09090B] px-4 focus-within:border-[#27272A]",
+  variants: {
+    variant: {
+      full: "",
+      small: "max-w-[358px]",
+    },
+  },
+  defaultVariants: {
+    variant: "small",
+  },
+});
+
+interface InputRootProps
+  extends ComponentProps<"div">,
+    VariantProps<typeof inputVariants> {
   error?: boolean;
 }
 
@@ -8,7 +24,7 @@ export function InputRoot({ error = false, ...props }: InputRootProps) {
   return (
     <div
       data-error={error}
-      className="data-[error=true]:border-danger group flex h-12 max-w-[358px] flex-1 items-center gap-2 rounded-xl border border-[#27272A] bg-[#09090B] px-4 focus-within:border-[#27272A]"
+      className={inputVariants({ variant: props.variant })}
       {...props}
     />
   );
