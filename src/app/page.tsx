@@ -3,6 +3,7 @@
 import { getClients } from "@/actions/getClients";
 import { DataTable } from "@/components/DataClients";
 import { Checkbox } from "@/components/ui/checkbox";
+import useFormatPhone from "@/hooks/use-format-phone";
 import { Client } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
@@ -10,6 +11,7 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const [clients, setClients] = useState<Client[]>([]);
   const [search, setSearch] = useState("");
+  const { formatPhone } = useFormatPhone();
 
   useEffect(() => {
     const fetch = async () => {
@@ -51,14 +53,25 @@ export default function Home() {
     {
       accessorKey: "phone",
       header: "Telefone",
+      cell(props) {
+        return <span>{formatPhone(props.row.original?.phone)}</span>;
+      },
     },
     {
       accessorKey: "birthDate",
       header: "Nascimento",
     },
     {
-      accessorKey: "address.street",
+      accessorKey: "address",
       header: "Endereço",
+      cell(props) {
+        return (
+          <span>
+            {props.row.original?.address?.street},{" "}
+            {props.row.original?.address?.number}
+          </span>
+        );
+      },
     },
   ];
 

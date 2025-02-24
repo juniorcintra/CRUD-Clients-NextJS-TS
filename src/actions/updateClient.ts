@@ -1,6 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { db } from "@/lib/prisma";
 
 interface CreateClientParams {
@@ -24,14 +23,17 @@ interface CreateClientParams {
 export const createClients = async (params: CreateClientParams) => {
   await db.client.update({
     where: { id: params.id },
-    data: params,
+    data: {
+      name: params.name,
+      email: params.email,
+      phone: params.phone,
+      birthDate: params.birthDate,
+      userId: params.userId,
+    },
   });
 
   await db.address.update({
     where: { clientId: params.id },
     data: { ...params.address, clientId: params.id },
   });
-
-  revalidatePath("/clients/new");
-  revalidatePath("/");
 };

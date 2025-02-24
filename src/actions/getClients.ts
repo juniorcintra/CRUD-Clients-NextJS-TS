@@ -14,5 +14,8 @@ export const getClients = async ({ search }: GetClientsProps) => {
         { email: { contains: search, mode: "insensitive" } },
       ],
     },
+    include: {
+      address: true,
+    },
   });
 };

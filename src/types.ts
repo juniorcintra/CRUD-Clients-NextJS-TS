@@ -4,19 +4,19 @@ export type Client = {
   email: string;
   phone: string;
   birthDate: string;
-  address?: Address | null;
+  address: Address | null;
 };
 
 export type Address = {
-  id: string;
-  zipCode: string;
-  number: string;
-  street: string;
-  complement: string;
-  neighborhood: string;
-  city: string;
-  state: string;
-  createdAt: Date;
-  updatedAt: Date;
-  clientId: string;
+  id: string | null;
+  zipCode: string | null;
+  number: string | null;
+  street: string | null;
+  complement: string | null;
+  neighborhood: string | null;
+  city: string | null;
+  state: string | null;
+  createdAt: Date | null;
+  updatedAt: Date | null;
+  clientId: string | null;
 };
