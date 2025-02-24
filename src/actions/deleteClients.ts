@@ -2,7 +2,7 @@
 
 import { db } from "@/lib/prisma";
 
-export const deleteBooking = async (clientIds: string[]) => {
+export const deleteClients = async (clientIds: string[]) => {
   await db.client.deleteMany({
     where: {
       id: { in: clientIds },

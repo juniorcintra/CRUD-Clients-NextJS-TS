@@ -20,7 +20,7 @@ interface CreateClientParams {
   };
 }
 
-export const createClients = async (params: CreateClientParams) => {
+export const updateClient = async (params: CreateClientParams) => {
   await db.client.update({
     where: { id: params.id },
     data: {

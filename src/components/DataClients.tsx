@@ -23,6 +23,9 @@ import { useState } from "react";
 import ButtonComponent from "./CustomButton";
 import { InputField, InputIcon, InputRoot } from "./Input";
 import { Button } from "./ui/button";
+import { deleteClients } from "@/actions/deleteClients";
+import { Client } from "@/types";
+import { useRouter } from "next/navigation";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -39,6 +42,7 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = useState({});
+  const { refresh } = useRouter();
 
   const table = useReactTable({
     data,
@@ -53,6 +57,15 @@ export function DataTable<TData, TValue>({
       rowSelection,
     },
   });
+
+  const handleDelete = async () => {
+    const clientIds = table
+      .getFilteredSelectedRowModel()
+      .rows.map((row) => (row.original as Client).id);
+
+    await deleteClients(clientIds);
+    refresh();
+  };
 
   return (
     <div className="h-fit w-full space-y-4 rounded-md bg-[#18181B] p-6">
@@ -70,7 +83,7 @@ export function DataTable<TData, TValue>({
         </InputRoot>
         {table.getFilteredSelectedRowModel().rows.length > 0 && (
           <div className="h-9 max-w-[220px]">
-            <ButtonComponent type="button" variant="red">
+            <ButtonComponent type="button" variant="red" onClick={handleDelete}>
               Excluir Selecionado
               {table.getFilteredSelectedRowModel().rows.length > 1 ? "s" : ""}
               <Trash />
